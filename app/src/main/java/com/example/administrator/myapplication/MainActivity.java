@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.qi.ResponseObserver;
-import com.qi.http.Magnet;
+import com.qi.http.RetrofitManager;
+
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -25,8 +27,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final TextView textView = findViewById(R.id.textView);
-        Magnet magnet = new Magnet("http://proapp.feikongbao.com/");
-        ITest test = magnet.create(ITest.class);
+        RetrofitManager retrofitManager = new RetrofitManager.Builder()
+                .baseUrl("http://proapp.feikongbao.com/")
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .build();
+        ITest test = retrofitManager.create(ITest.class);
         PostBean postBean = new PostBean();
         postBean.Content = new PostBean.ContentBean();
         postBean.Head = new PostBean.HeadBean();
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         test.test(postBean).subscribe(new MyResponseObserver());
     }
 
-    public static class MyResponseObserver extends ResponseObserver<TestBean>{
+    public static class MyResponseObserver extends ResponseObserver<TestBean> {
 
         @Override
         public void onNext(Object o) {

@@ -1,13 +1,7 @@
 package com.example.mylibrary;
 
-import com.qi.http.Magnet;
-
 import org.junit.Test;
 
-import retrofit2.Retrofit;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
